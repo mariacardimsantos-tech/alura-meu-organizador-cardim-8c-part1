@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organizador Cardim</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Fonte do Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Three.js via CDN para o fundo 3D -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- Canvas onde o objeto 3D flutuante é renderizado -->
+  <canvas id="bg3d"></canvas>
+
+  <div class="app-container">
+    <!-- Cabeçalho -->
+    <header class="header">
+      <h1 class="title">Organizador Cardim</h1>
+      <p class="description">
+        Sua plataforma moderna para simulação, planejamento e controle de tarefas diárias e rotinas pessoais. 
+        Mantenha o foco, otimize seu tempo e conquiste maior produtividade com hábitos estruturados.
+      </p>
+    </header>
+
+    <!-- Seção de Cartões / Dicas Interativas -->
+    <main class="content-grid">
+      
+      <!-- Card 1 -->
+      <div class="card" onclick="openModal('modal-1')">
+        <div class="card-badge">Técnica #1</div>
+        <h2>Método Timeblocking</h2>
+        <p>Divida o seu dia em blocos fixos de tempo dedicados a tarefas específicas para evitar distrações.</p>
+        <button class="btn-card">Saiba mais</button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card" onclick="openModal('modal-2')">
+        <div class="card-badge">Técnica #2</div>
+        <h2>Regra dos 2 Minutos</h2>
+        <p>Se uma tarefa leva menos de 2 minutos para ser concluída, faça-a imediatamente sem adiar.</p>
+        <button class="btn-card">Saiba mais</button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card" onclick="openModal('modal-3')">
+        <div class="card-badge">Técnica #3</div>
+        <h2>Construção de Hábitos</h2>
+        <p>Associe um novo hábito a algo que você já faz diariamente para garantir maior consistência.</p>
+        <button class="btn-card">Saiba mais</button>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card" onclick="openModal('modal-4')">
+        <div class="card-badge">Técnica #4</div>
+        <h2>Priorização Matriz Eisenhower</h2>
+        <p>Separe tarefas entre Urgentes e Importantes para focar naquilo que realmente gera resultados.</p>
+        <button class="btn-card">Saiba mais</button>
+      </div>
+
+    </main>
+
+    <!-- Simulação Interativa de Tarefas -->
+    <section class="planner-section">
+      <h2>Simulador de Rotina Diária</h2>
+      <div class="input-group">
+        <input type="text" id="taskInput" placeholder="Digite uma nova tarefa ou rotina...">
+        <button onclick="addTask()">Adicionar</button>
+      </div>
+      <ul id="taskList" class="task-list">
+        <li><span>Exercício físico matinal</span> <button onclick="removeTask(this)">✔</button></li>
+        <li><span>Revisar metas semanais no Organizador Cardim</span> <button onclick="removeTask(this)">✔</button></li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>&copy; Organizador Cardim - Produtividade & Alta Performance</p>
+    </footer>
+  </div>
+
+  <!-- Modais com efeito Glassmorphism & Destaque -->
+
+  <div id="modal-1" class="modal-overlay" onclick="closeModalOutside(event, 'modal-1')">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-1')">&times;</span>
+      <h3>Técnica de Timeblocking</h3>
+      <div class="modal-body">
+        <p>O <strong>Timeblocking</strong> é uma estratégia onde você divide o seu calendário em blocos contínuos de tempo, em vez de manter apenas uma lista solta de afazeres.</p>
+        <h4>Como aplicar:</h4>
+        <ul>
+          <li>Defina blocos de 30 a 90 minutos para tarefas profundas.</li>
+          <li>Reserve blocos para descanso, refeições e imprevistos.</li>
+          <li>Evite realizar multitarefas durante o bloco definido.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-2" class="modal-overlay" onclick="closeModalOutside(event, 'modal-2')">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-2')">&times;</span>
+      <h3>A Regra dos 2 Minutos</h3>
+      <div class="modal-body">
+        <p>Criada por David Allen (autor do método GTD), esta regra sugere que se uma ação exige menos de 2 minutos para ser concluída, o tempo gasto para registrá-la ou organizá-la é maior do que o tempo de executá-la.</p>
+        <h4>Exemplos rápidos:</h4>
+        <ul>
+          <li>Responder a um e-mail simples.</li>
+          <li>Guardar a louça do café.</li>
+          <li>Agendar uma reunião pontual.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-3" class="modal-overlay" onclick="closeModalOutside(event, 'modal-3')">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-3')">&times;</span>
+      <h3>Empilhamento de Hábitos (Habit Stacking)</h3>
+      <div class="modal-body">
+        <p>A melhor forma de criar uma nova rotina é atrelá-la a uma rotina já existente e bem consolidada no seu dia a dia.</p>
+        <h4>Fórmula prática:</h4>
+        <p><em>"Depois de [HÁBITO ATUAL], eu vou [NOVO HÁBITO]."</em></p>
+        <p>Exemplo: <em>"Depois de tomar o café da manhã, vou anotar 3 prioridades no Organizador Cardim."</em></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-4" class="modal-overlay" onclick="closeModalOutside(event, 'modal-4')">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-4')">&times;</span>
+      <h3>Matriz de Priorização (Eisenhower)</h3>
+      <div class="modal-body">
+        <p>A Matriz de Eisenhower ajuda a categorizar as tarefas com base em prioridade e urgência para evitar a sobrecarga mental.</p>
+        <ul>
+          <li><strong>Urgente + Importante:</strong> Faça agora.</li>
+          <li><strong>Não Urgente + Importante:</strong> Agende para fazer.</li>
+          <li><strong>Urgente + Não Importante:</strong> Delegue se possível.</li>
+          <li><strong>Não Urgente + Não Importante:</strong> Elimine.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts para os Modais, Lista de Tarefas e Objeto 3D -->
+  <script>
+    // Funções dos Modais
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+    function closeModalOutside(event, id) {
+      if (event.target.classList.contains('modal-overlay')) {
+        closeModal(id);
+      }
+    }
+
+    // Função de simulação de tarefas
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      const val = input.value.trim();
+      if(val !== '') {
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${val}</span> <button onclick="removeTask(this)">✔</button>`;
+        document.getElementById('taskList').appendChild(li);
+        input.value = '';
+      }
+    }
+    function removeTask(btn) {
+      btn.parentElement.style.opacity = '0';
+      setTimeout(() => btn.parentElement.remove(), 300);
+    }
+
+    // Configuração do Fundo 3D com Three.js (Objeto Roxo Flutuante)
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg3d'), alpha: true, antialias: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Objeto 3D: Icosaedro Futurista
+    const geometry = new THREE.IcosahedronGeometry(2.5, 0);
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x8b5cf6,
+      wireframe: true,
+      roughness: 0.3,
+      metalness: 0.8
+    });
+    const shape = new THREE.Mesh(geometry, material);
+    scene.add(shape);
+
+    // Iluminação
+    const pointLight = new THREE.PointLight(0xa855f7, 2, 100);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
+
+    const ambientLight = new THREE.AmbientLight(0x2e1065, 1.5);
+    scene.add(ambientLight);
+
+    camera.position.z = 6;
+
+    // Animação Contínua (Flutuação e Rotação)
+    let clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const elapsedTime = clock.getElapsedTime();
+
+      shape.rotation.x = elapsedTime * 0.3;
+      shape.rotation.y = elapsedTime * 0.4;
+      shape.position.y = Math.sin(elapsedTime * 1.5) * 0.4; // Movimento de flutuação em Y
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // RedimensionamentoResponsivo
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
